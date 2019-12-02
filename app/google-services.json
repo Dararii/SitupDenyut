@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "148760115420",
+    "firebase_url": "https://situpdenyut.firebaseio.com",
+    "project_id": "situpdenyut",
+    "storage_bucket": "situpdenyut.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148760115420:android:4757d69141ce082eb9dc19",
+        "android_client_info": {
+          "package_name": "com.sift.situpdenyut"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "148760115420-q3jsjgqr5njslp0tv1lcike6mnbt67cr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sift.situpdenyut",
+            "certificate_hash": "b95a6f293f9660741bbc95cc895db9d409facbd8"
+          }
+        },
+        {
+          "client_id": "148760115420-8ko0oeiemf15j9n1rmiv7bgbij67qhm4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_32uNWYiQszq7tB9Z710U1CtV59hQofY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "148760115420-8ko0oeiemf15j9n1rmiv7bgbij67qhm4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
