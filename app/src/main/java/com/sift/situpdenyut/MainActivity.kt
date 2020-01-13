@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var denyutRef: DatabaseReference
     private lateinit var situpListener: ValueEventListener
     private lateinit var situpRef: DatabaseReference
-    private var namaSession = "namaSession1"
     private var currentSessionDenyutData: ArrayList<Denyut> = ArrayList()
     private var currentSessionSitupData: Long = 0
 
@@ -41,22 +40,27 @@ class MainActivity : AppCompatActivity() {
         Log.d("MAIN", "engine object $dbEngine")
 
         initRealtimeListener()
+
+        btnCountSitup.setOnClickListener {
+            dbEngine.getDb().reference.child("data_denyut").child("${System.currentTimeMillis()}")
+                .setValue((0..50).random())
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        denyutRef.addValueEventListener(denyutListener)
+        denyutRef.limitToLast(15).addValueEventListener(denyutListener)
         situpRef.addValueEventListener(situpListener)
     }
 
     override fun onPause() {
-        denyutRef.removeEventListener(denyutListener)
+        denyutRef.limitToLast(15).removeEventListener(denyutListener)
         situpRef.removeEventListener(situpListener)
         super.onPause()
     }
 
     private fun initRealtimeListener() {
-        denyutRef = dbEngine.getDb().reference.child("denyut").child(namaSession)
+        denyutRef = dbEngine.getDb().reference.child("data_denyut")
         denyutListener = object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}
             override fun onDataChange(data: DataSnapshot) {
@@ -64,13 +68,12 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "Data test1: ${data.childrenCount}")
                 for (i in data.children) {
                     try {
-                        val v = i.child("value").value
+                        val v = i.value
                         val t = "${i.key}"
 
                         val denyut = Denyut(
                             value = v.toString().toInt(),
-                            timestamp = t,
-                            namaSession = namaSession
+                            timestamp = t
                         )
                         currentSessionDenyutData.add(denyut)
                     } catch (e: Exception) {
@@ -81,12 +84,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        situpRef = dbEngine.getDb().reference.child("situp").child(namaSession)
+        situpRef = dbEngine.getDb().reference.child("situp")
         situpListener = object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}
             override fun onDataChange(data: DataSnapshot) {
                 try {
-                    currentSessionSitupData = data.child("value").value.toString().toLong()
+                    currentSessionSitupData = data.value.toString().toLong()
                     Log.d(TAG, "Data situp: ${data.value}")
                     textMainSitupCount.text = "$currentSessionSitupData kali"
                 } catch (e: Exception) {
@@ -98,7 +101,6 @@ class MainActivity : AppCompatActivity() {
 
     fun drawData(data: ArrayList<Denyut>, chart: LineChart) {
         val entries: MutableList<Entry> = ArrayList()
-
         for (i in 0 until data.size) {
             val v = try { // get the object by the key.
                 data[i].value.toFloat()
@@ -131,9 +133,10 @@ class MainActivity : AppCompatActivity() {
         xAxis.textColor = Color.BLACK
         xAxis.setDrawAxisLine(true)
         xAxis.setDrawGridLines(false)
+        xAxis.setDrawLabels(false)
         xAxis.granularity = 1f
         xAxis.axisMinimum = 0f
-        xAxis.axisMaximum = if (data.size > 30) 30f else data.size.toFloat()
+        xAxis.axisMaximum = if (data.size > 30) 60f else data.size.toFloat()
         chart.invalidate() // refresh
 
     }

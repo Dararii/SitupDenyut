@@ -4,10 +4,9 @@ import java.io.Serializable
 
 data class Denyut(
     var value: Int,
-    var timestamp: String,
-    var namaSession: String
+    var timestamp: String
 ) : Serializable {
 
-    constructor() : this(0, "0", "")
+    constructor() : this(0, "0")
 
 }
