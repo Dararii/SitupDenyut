@@ -8,6 +8,9 @@ class DenyutApp: Application() {
 
     lateinit var appComponent: AppComponent
 
+    /**
+     * App Entry point
+     */
     override fun onCreate() {
         super.onCreate()
         appComponent = DaggerAppComponent.create()

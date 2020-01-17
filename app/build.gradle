@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 android {
     signingConfigs {
         umum {
-            storeFile file('C:\\Users\\darar\\Dropbox\\Projects\\KeyStore\\EssensiftProject.jks')
+            storeFile file('/home/velodi/Dropbox/Projects/KeyStore/EssensiftProject.jks')
             keyAlias = 'essensiftproject'
             storePassword 'essensift'
             keyPassword 'essensift'

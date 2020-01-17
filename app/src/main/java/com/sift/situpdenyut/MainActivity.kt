@@ -31,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     private var currentSessionDenyutData: ArrayList<Denyut> = ArrayList()
     private var currentSessionSitupData: Long = 0
 
+    /**
+     * Activity entry point
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -44,6 +47,15 @@ class MainActivity : AppCompatActivity() {
         btnCountSitup.setOnClickListener {
             dbEngine.getDb().reference.child("data_denyut").child("${System.currentTimeMillis()}")
                 .setValue((0..50).random())
+        }
+
+        switch1.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                dbEngine.getDb().reference.child("switch").setValue(1)
+            } else {
+                dbEngine.getDb().reference.child("switch").setValue(0)
+                dbEngine.getDb().reference.child("data_denyut").removeValue()
+            }
         }
     }
 
@@ -59,6 +71,9 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
     }
 
+    /**
+     * Real-time event listener from database
+     */
     private fun initRealtimeListener() {
         denyutRef = dbEngine.getDb().reference.child("data_denyut")
         denyutListener = object : ValueEventListener {
@@ -99,6 +114,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Draw data to chart
+     */
     fun drawData(data: ArrayList<Denyut>, chart: LineChart) {
         val entries: MutableList<Entry> = ArrayList()
         for (i in 0 until data.size) {
