@@ -5,12 +5,6 @@ apply plugin: 'kotlin-kapt'
 
 android {
     signingConfigs {
-        umum {
-            storeFile file('/home/velodi/Dropbox/Projects/KeyStore/EssensiftProject.jks')
-            keyAlias = 'essensiftproject'
-            storePassword 'essensift'
-            keyPassword 'essensift'
-        }
     }
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -21,7 +15,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.umum
     }
     buildTypes {
         release {
